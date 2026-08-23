@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:news_c19/ui/utils/app_assets.dart';
 
 class CategoryDM {

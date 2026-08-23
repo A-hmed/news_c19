@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:news_c19/ui/screens/news/news_screen.dart';
 import 'package:news_c19/ui/screens/splash/splash_screen.dart';
 import 'package:news_c19/ui/utils/app_theme.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
 ///Bloc - Provider - GetX
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: AppTheme.lightTheme,
+      theme: AppTheme.darkTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
       home: SplashScreen(),
@@ -26,8 +26,6 @@ class MyApp extends StatelessWidget {
 ///1- Implement search screen use everything api
 ///2- Implement article details bottom sheet
 ///3- Add Pagination for everything api
-
-
 
 ///HTTP Request:
 /// Type: GET - POST - PATCH - DELETE ...

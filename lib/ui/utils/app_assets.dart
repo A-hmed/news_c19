@@ -13,6 +13,8 @@ abstract final class AppAssets {
   static const String businessLight = "assets/images/business_light.png";
   static const String technologyDark = "assets/images/technology_dark.png";
   static const String technologyLight = "assets/images/technology_light.png";
-  static const String entertainmentDark = "assets/images/entertainment_dark.png";
-  static const String entertainmentLight = "assets/images/entertainment_light.png";
+  static const String entertainmentDark =
+      "assets/images/entertainment_dark.png";
+  static const String entertainmentLight =
+      "assets/images/entertainment_light.png";
 }

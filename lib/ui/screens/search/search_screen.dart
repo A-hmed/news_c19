@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news_c19/api/api_manager.dart';
 import 'package:news_c19/model/articles_response.dart';
+import 'package:news_c19/ui/utils/app_theme.dart';
+import 'package:news_c19/ui/utils/build_context_extensions.dart';
 import 'package:news_c19/ui/widgets/article_widget.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -80,7 +82,14 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF121212),
+      appBar: AppBar(
+        backgroundColor: context.isDark
+            ? AppTheme.darkTheme.appBarTheme.backgroundColor
+            : AppTheme.lightTheme.appBarTheme.backgroundColor,
+      ),
+      backgroundColor: context.isDark
+          ? AppTheme.darkTheme.primaryColorLight
+          : AppTheme.lightTheme.primaryColorLight,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),

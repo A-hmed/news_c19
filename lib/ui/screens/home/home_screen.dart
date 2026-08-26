@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
-        actions: [Icon(Icons.search, color: theme.secondaryColor)],
+        //actions: [Icon(Icons.search, color: theme.secondaryColor)],
       ),
       drawer: AppDrawer(showGoToHomeNavigation: false),
       body: Column(
@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
       BuildContext context, CategoryDM category, bool isLeftSidedText) {
     var theme = context.theme;
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.push(context, AppRoutes.news(category));
       },
       child: Container(

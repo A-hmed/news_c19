@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_c19/model/articles_response.dart';
+//import 'package:news_c19/ui/utils/app_colors.dart';
+import 'package:news_c19/ui/utils/app_theme.dart';
 import 'package:news_c19/ui/utils/build_context_extensions.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -56,13 +58,20 @@ class ArticleBottomSheet extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              Navigator.pop(context);
+              debugPrint(
+                  "URL: ${articleDM.url}"); // تأكد من طباعة الرابط في الـ Console
               if (articleDM.url != null && articleDM.url!.isNotEmpty) {
+                Navigator.pop(context); // إغلاق الـ BottomSheet
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (_) => ArticleWebViewScreen(url: articleDM.url!),
                   ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text("No full article URL available")),
                 );
               }
             },
@@ -106,7 +115,10 @@ class _ArticleWebViewScreenState extends State<ArticleWebViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        toolbarHeight: 35,
+        backgroundColor: context.isDark
+            ? AppTheme.darkTheme.primaryColorLight
+            : AppTheme.lightTheme.primaryColorLight,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Stack(

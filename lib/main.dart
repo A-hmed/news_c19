@@ -4,7 +4,6 @@ import 'package:news_c19/data/hive_adapters/source_dm_adapter.dart';
 import 'package:news_c19/ui/screens/splash/splash_screen.dart';
 import 'package:news_c19/ui/utils/app_theme.dart';
 
-
 /// Widget -> VM -> Repo -> [LocalDataSource - RemoteDataSource]
 void main() async {
   Hive.initFlutter();
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       home: SplashScreen(),
     );
   }

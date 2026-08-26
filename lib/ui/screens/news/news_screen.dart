@@ -36,36 +36,34 @@ class _NewsScreenState extends State<NewsScreen> {
   @override
   Widget build(BuildContext context) {
     Widget body;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.categoryDM.name),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                Navigator.push(context, AppRoutes.search());
-              },
-            ),
-          ],
-        ),
-        drawer: const AppDrawer(showGoToHomeNavigation: true),
-        body: BlocBuilder<NewsViewModel, NewsState>(
-          bloc: viewModel,
-          builder: (context, state) {
-            if (state.isLoading) {
-              body = const Center(child: CircularProgressIndicator());
-            } else if (state.errorMessage.isNotEmpty) {
-              body = Text(
-                state.errorMessage,
-                style: const TextStyle(color: Colors.white),
-              );
-            } else {
-              body = buildTabBar(state.sources);
-            }
-            return body;
-          },
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.categoryDM.name),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              Navigator.push(context, AppRoutes.search());
+            },
+          ),
+        ],
+      ),
+      drawer: const AppDrawer(showGoToHomeNavigation: true),
+      body: BlocBuilder<NewsViewModel, NewsState>(
+        bloc: viewModel,
+        builder: (context, state) {
+          if (state.isLoading) {
+            body = const Center(child: CircularProgressIndicator());
+          } else if (state.errorMessage.isNotEmpty) {
+            body = Text(
+              state.errorMessage,
+              style: const TextStyle(color: Colors.white),
+            );
+          } else {
+            body = buildTabBar(state.sources);
+          }
+          return body;
+        },
       ),
     );
   }

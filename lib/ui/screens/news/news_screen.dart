@@ -7,7 +7,7 @@ import 'package:news_c19/model/category_dm.dart';
 import 'package:news_c19/model/sources_response.dart';
 import 'package:news_c19/ui/screens/news/articles_list.dart';
 import 'package:news_c19/ui/screens/news/news_viewmodel.dart';
-
+import 'package:news_c19/ui/utils/app_routes.dart';
 import '../../widgets/app_drawer.dart';
 
 class NewsScreen extends StatefulWidget {
@@ -22,8 +22,9 @@ class NewsScreen extends StatefulWidget {
 class _NewsScreenState extends State<NewsScreen> {
   NewsViewModel viewModel = NewsViewModel(
     newsRepository: NewsRepositoryImpl(
-        newsRemoteDataSource: NewsRemoteDataSourceImpl(),
-        newsLocalDataSource: NewsLocalDataSourceImpl2())
+      newsRemoteDataSource: NewsRemoteDataSourceImpl(),
+      newsLocalDataSource: NewsLocalDataSourceImpl2(),
+    ),
   );
 
   @override
@@ -31,36 +32,33 @@ class _NewsScreenState extends State<NewsScreen> {
     super.initState();
     viewModel.loadSources(widget.categoryDM.name);
   }
-  /// Cubit - mvvm
-  ///ChangeNotifierProvider -> BlocProvider
-  ///Consumer -> BlocBuilder
-  // BlocListener
-  // BlocConsumer -> BlocBuilder + BlocListener
-  ///Provider.of(context) -> BlocProvider(context)
+
   @override
   Widget build(BuildContext context) {
-    // BlocListener<NewsViewModel, NewsState>(
-    //   listener: (context, state){
-    //   },
-    //   child: Scaffold(),
-    // );
     Widget body;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.categoryDM.name),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                Navigator.push(context, AppRoutes.search());
+              },
+            ),
+          ],
         ),
-        drawer: AppDrawer(showGoToHomeNavigation: true),
+        drawer: const AppDrawer(showGoToHomeNavigation: true),
         body: BlocBuilder<NewsViewModel, NewsState>(
-          /// Use this pattern only if the viewmodel is used in this widget only
           bloc: viewModel,
           builder: (context, state) {
             if (state.isLoading) {
-              body = Center(child: CircularProgressIndicator());
+              body = const Center(child: CircularProgressIndicator());
             } else if (state.errorMessage.isNotEmpty) {
               body = Text(
                 state.errorMessage,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               );
             } else {
               body = buildTabBar(state.sources);
@@ -73,25 +71,26 @@ class _NewsScreenState extends State<NewsScreen> {
   }
 
   Widget buildTabBar(List<SourceDM> sources) {
-    if(sources.isEmpty) return Center(child: Text("No sources in this category"),);
-    // var nums = [1, 2 ,3];
-    // nums.map((num) => num.toString()).toList()
+    if (sources.isEmpty) {
+      return const Center(child: Text("No sources in this category"));
+    }
 
     var tabs = sources.map((source) => Text(source.name ?? "Unknown")).toList();
     var articlesList =
         sources.map((source) => ArticlesList(sourceId: source.id!)).toList();
 
     return DefaultTabController(
-        length: tabs.length,
-        child: Column(
-          children: [
-            TabBar(
-              tabs: tabs,
-              isScrollable: true,
-              tabAlignment: TabAlignment.start,
-            ),
-            Expanded(child: TabBarView(children: articlesList))
-          ],
-        ));
+      length: tabs.length,
+      child: Column(
+        children: [
+          TabBar(
+            tabs: tabs,
+            isScrollable: true,
+            tabAlignment: TabAlignment.start,
+          ),
+          Expanded(child: TabBarView(children: articlesList)),
+        ],
+      ),
+    );
   }
 }

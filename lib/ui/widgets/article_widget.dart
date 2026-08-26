@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_c19/model/articles_response.dart';
 import 'package:news_c19/ui/utils/build_context_extensions.dart';
-import 'package:timeago/timeago.dart'; 
+import 'package:timeago/timeago.dart';
 
 class ArticleWidget extends StatelessWidget {
   final ArticleDM articleDM;
@@ -11,9 +11,9 @@ class ArticleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var date = DateTime.parse(articleDM.publishedAt??"");
+    var date = DateTime.parse(articleDM.publishedAt ?? "");
     var theme = context.theme;
-    print("url: ${articleDM.urlToImage}");
+    debugPrint("url: ${articleDM.urlToImage}");
     return Container(
       padding: EdgeInsets.all(8),
       margin: EdgeInsets.all(8),
@@ -28,17 +28,24 @@ class ArticleWidget extends StatelessWidget {
           CachedNetworkImage(
             imageUrl: articleDM.urlToImage ?? "",
             height: context.height * .25,
-            placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+            placeholder: (context, url) =>
+                Center(child: CircularProgressIndicator()),
             errorWidget: (context, url, error) {
-              print("failed to load: $error");
+              debugPrint("failed to load: $error");
               return Icon(Icons.error);
-            } ,
+            },
           ),
           Text(articleDM.title ?? ""),
           Row(children: [
-            if (articleDM.author != null) Expanded(child: Text("By: ${articleDM.author}", style: theme.textTheme.displayMedium)),
+            if (articleDM.author != null)
+              Expanded(
+                  child: Text("By: ${articleDM.author}",
+                      style: theme.textTheme.displayMedium)),
             if (articleDM.publishedAt != null)
-              Text(format(date), style: theme.textTheme.displayMedium,),
+              Text(
+                format(date),
+                style: theme.textTheme.displayMedium,
+              ),
           ])
         ],
       ),

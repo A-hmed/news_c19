@@ -4,6 +4,8 @@ import 'package:news_c19/ui/utils/app_routes.dart';
 import 'package:news_c19/ui/utils/build_context_extensions.dart';
 import 'package:news_c19/ui/widgets/app_drawer.dart';
 
+import '../../widgets/search_widget.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -13,7 +15,20 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
-        actions: [Icon(Icons.search, color: theme.secondaryColor)],
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SearchWidget()));
+              },
+              child: Icon(Icons.search, color: theme.secondaryColor),
+            ),
+          )
+        ],
       ),
       drawer: AppDrawer(showGoToHomeNavigation: false),
       body: Column(
@@ -40,7 +55,7 @@ class HomeScreen extends StatelessWidget {
       BuildContext context, CategoryDM category, bool isLeftSidedText) {
     var theme = context.theme;
     return InkWell(
-      onTap: (){
+      onTap: () {
         Navigator.push(context, AppRoutes.news(category));
       },
       child: Container(

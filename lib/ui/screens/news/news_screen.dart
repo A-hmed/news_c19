@@ -8,6 +8,8 @@ import 'package:news_c19/model/category_dm.dart';
 import 'package:news_c19/model/sources_response.dart';
 import 'package:news_c19/ui/screens/news/articles_list.dart';
 import 'package:news_c19/ui/screens/news/news_viewmodel.dart';
+import 'package:news_c19/ui/utils/app_routes.dart';
+import 'package:news_c19/ui/utils/build_context_extensions.dart';
 
 import '../../widgets/app_drawer.dart';
 
@@ -50,6 +52,14 @@ class _NewsScreenState extends State<NewsScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.categoryDM.name),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(context, AppRoutes.search());
+              },
+              icon: Icon(Icons.search, color: context.theme.secondaryColor),
+            )
+          ],
         ),
         drawer: AppDrawer(showGoToHomeNavigation: true),
         body: BlocBuilder<NewsViewModel, NewsState>(

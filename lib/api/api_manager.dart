@@ -41,4 +41,36 @@ abstract final class ApiManager {
       rethrow;
     }
   }
+
+  static Future<List<ArticleDM>> loadTopHeadlines() async {
+    try {
+      var serverResponse = await _dio.get("/v2/top-headlines",
+          queryParameters: {"apiKey": _apiKey, "country": "us"});
+      if (serverResponse.statusCode! >= 200 &&
+          serverResponse.statusCode! < 300) {
+        Map<String, dynamic> json = serverResponse.data;
+        var myResponse = ArticlesResponse.fromJson(json);
+        return myResponse.articles!;
+      }
+      throw _defaultErrorMessage;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<List<ArticleDM>> searchArticles(String query) async {
+    try {
+      var serverResponse = await _dio.get("/v2/everything",
+          queryParameters: {"apiKey": _apiKey, "q": query});
+      if (serverResponse.statusCode! >= 200 &&
+          serverResponse.statusCode! < 300) {
+        Map<String, dynamic> json = serverResponse.data;
+        var myResponse = ArticlesResponse.fromJson(json);
+        return myResponse.articles!;
+      }
+      throw _defaultErrorMessage;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

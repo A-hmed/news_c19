@@ -13,7 +13,14 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
-        actions: [Icon(Icons.search, color: theme.secondaryColor)],
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, AppRoutes.search());
+            },
+            icon: Icon(Icons.search, color: theme.secondaryColor),
+          )
+        ],
       ),
       drawer: AppDrawer(showGoToHomeNavigation: false),
       body: Column(
